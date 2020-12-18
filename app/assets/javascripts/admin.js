@@ -39,3 +39,11 @@ function loadRevenueForPastWeek(container) {
     $("#recent-revenue").append(revenueElement)
   })
 }
+
+function loadRevenue(merchant_id, container) {
+  let uri = `/api/v1/merchants/${merchant_id}/revenue`
+  loadResource(uri, function(revenue){
+    let revenue_element = `<p>Revenue: ${revenue.attributes.revenue}</p>`
+    container.append(revenue_element)
+  })
+}

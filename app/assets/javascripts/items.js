@@ -25,8 +25,12 @@ function loadAllItems(container) {
 function loadItem(item_id, itemContainer) {
   let uri = `/api/v1/items/${item_id}`
   loadResource(uri, function(item){
-    card = itemCard(item)
-    itemContainer.append(card)
+    loadResource(`/api/v1/merchants/${item.attributes.merchant_id}`, function(merchant){
+      let merchantName = `<p>Merchant: ${merchant.attributes.name}</p>`
+      card = itemCard(item)
+      itemContainer.append(card)
+      itemContainer.append(merchantName)
+    })
   })
 }
 
