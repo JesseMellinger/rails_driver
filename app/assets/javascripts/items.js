@@ -1,15 +1,13 @@
-function itemCard(item, merchant) {
+function itemCard(item) {
   let name = item.attributes.name
   let description = item.attributes.description
   let unit_price = item.attributes.unit_price
-  let merchant_name = merchant.attributes.name
   let card = `
     <div class="card">
       <div class="card-body">
         <h3 class="card-title"><a href='/items/${item.id}'>${name}</a></h3>
         <p>Price: ${unit_price}</p>
         <p class="card-text">${description}</p>
-        <p>Merchant: ${merchant_name}</p>
       </div>
     </div>
   `
@@ -28,8 +26,10 @@ function loadItem(item_id, itemContainer) {
   let uri = `/api/v1/items/${item_id}`
   loadResource(uri, function(item){
     loadResource(`/api/v1/merchants/${item.attributes.merchant_id}`, function(merchant){
-      card = itemCard(item, merchant)
+      let merchantName = `<p>Merchant: ${merchant.attributes.name}</p>`
+      card = itemCard(item)
       itemContainer.append(card)
+      itemContainer.append(merchantName)
     })
   })
 }
